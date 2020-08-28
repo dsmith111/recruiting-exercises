@@ -21,7 +21,7 @@ Finally, if none of the above is possible then this can also be run using google
             <li>https://colab.research.google.com/drive/1sJfjWQxSkkY9Ghdn6Z2SwVwM0e2ERAdX</li>
         </ul>
     </li>
-    <li>Upload the InventoryAllocationRC.py file to the session storage.</li>
+    <li>Upload the InventoryAllocationRC.py file to the session storage(The little folder on the left).</li>
     <li>Run the tests normally.</li>
 </ol>
     
