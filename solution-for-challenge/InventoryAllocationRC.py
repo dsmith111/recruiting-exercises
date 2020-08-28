@@ -1,10 +1,7 @@
 #!/usr/bin/env python
 
 class inventoryAllocation:
-
-#     def __init__(self, orders, warehouses):
-#         self.orders = orders
-#         self.warehouses = warehouses
+ouses
 
     # Define shipment validation method
     def findShipment(orders,warehouses):
@@ -24,31 +21,29 @@ class inventoryAllocation:
                 productDist+=list(products)
                 
             if order in productDist:
-                # Filter out warehouses which do not store the order,
-                # then filter out those which do hold the product,
-                # but have zero in stock
+
+                # Filter out warehouses which do not store the order
+                # by checking for name and amount in stock 
                 validWarehouses = filter(lambda warehouse: order
                                          in str(warehouse), warehouses)
                 stockedWarehouses = filter(lambda warehouse:
                                            warehouse[inventoryKey][order] != 0,
                                            validWarehouses)
                 stockedWarehouses = list(stockedWarehouses)
-                # Create variable summing up quantity of
-                # order across all warehouses
 
                 totalOrder = sum(map(lambda inventory:
                                  inventory[inventoryKey][order],
                                  stockedWarehouses.copy()))
                 countedStock = 0
+               
+                # If not enough inventory for current order, shipment is invalid
                 if totalOrder < orderLimit or len(stockedWarehouses) == 0:
                     return []
 
-                # Iterate through warehouses and add the company name &
-                # amount of the order they can provide
+					 # Add potential warehouses and amount of inventory they can
+					 # provide to shipment list
                 for warehouse in stockedWarehouses:
                     
-                    # If company not already present, then add them
-                    # Otherwise find their indexed location
                     if warehouse[nameKey] not in str(shipment):
                         shipment.append({warehouse[nameKey]: {}})
                         indexLocation = -1
@@ -60,14 +55,9 @@ class inventoryAllocation:
                             if next(iter(shipment[currentCount])) == warehouse[nameKey]:
                                 indexLocation = currentCount
 
-                    # Set variable for the amount of the order
-                    # the current warehouse has in stock
                     inStockAmount = warehouse[inventoryKey][order]
-
-                    # If the current order is fulfilled,
-                    # break loop and move to next,
-                    # otherwise continue calculating amount of product left to
-                    # ship while adding its warehouse
+							
+						  # If is order fulfilled, stop iterating
                     if inStockAmount + countedStock >= orderLimit:
                         amountNeeded = orderLimit - countedStock
                         shipment[indexLocation][warehouse[nameKey]].update({order: amountNeeded})

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-
 class inventoryAllocation:
+ouses
 
     # Define shipment validation method
     def findShipment(orders,warehouses):
@@ -21,6 +21,9 @@ class inventoryAllocation:
                 productDist+=list(products)
                 
             if order in productDist:
+
+                # Filter out warehouses which do not store the order
+                # by checking for name and amount in stock 
                 validWarehouses = filter(lambda warehouse: order
                                          in str(warehouse), warehouses)
                 stockedWarehouses = filter(lambda warehouse:
@@ -32,6 +35,7 @@ class inventoryAllocation:
                                  inventory[inventoryKey][order],
                                  stockedWarehouses.copy()))
                 countedStock = 0
+               
                 if totalOrder < orderLimit or len(stockedWarehouses) == 0:
                     return []
 
