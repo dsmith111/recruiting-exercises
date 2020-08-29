@@ -16,7 +16,7 @@ Finally, if none of the above is possible then this can also be run using google
 
 <ol>
     <li>Download the InventoryAllocationRC.py file.</li>
-    <li>open this google colab link:
+    <li>Open this google colab link:
         <ul>
             <li>https://colab.research.google.com/drive/1sJfjWQxSkkY9Ghdn6Z2SwVwM0e2ERAdX</li>
         </ul>

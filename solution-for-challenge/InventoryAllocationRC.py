@@ -40,8 +40,8 @@ ouses
                 if totalOrder < orderLimit or len(stockedWarehouses) == 0:
                     return []
 
-					 # Add potential warehouses and amount of inventory they can
-					 # provide to shipment list
+		# Add potential warehouses and amount of inventory they can
+		# provide to shipment list
                 for warehouse in stockedWarehouses:
                     
                     if warehouse[nameKey] not in str(shipment):
@@ -57,7 +57,7 @@ ouses
 
                     inStockAmount = warehouse[inventoryKey][order]
 							
-						  # If is order fulfilled, stop iterating
+		    # If is order fulfilled, stop iterating
                     if inStockAmount + countedStock >= orderLimit:
                         amountNeeded = orderLimit - countedStock
                         shipment[indexLocation][warehouse[nameKey]].update({order: amountNeeded})
