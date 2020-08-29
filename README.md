@@ -1,6 +1,6 @@
 # Challenge Notes
 
-Hello, my name is David Smith and this my solution to the inventory allocation challenge. All of the files are within the "solution-for-challenge" folder.
+Hello, my name is David Smith and this is my solution to the inventory allocation challenge. All of the files are within the "solution-for-challenge" folder.
 
 ## Instructions for running tests
 
