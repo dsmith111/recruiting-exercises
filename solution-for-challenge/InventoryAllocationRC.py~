@@ -14,10 +14,10 @@ ouses
                 raise TypeError
                 
             orderLimit = orders[order]
-            allListedInventory = map(lambda warehouse: warehouse[inventoryKey], warehouses)
+            inventoryAcrossAll = map(lambda x: x[inventoryKey], warehouses)
             productDist = []
             
-            for products in allListedInventory:
+            for products in inventoryAcrossAll:
                 productDist+=list(products)
                 
             if order in productDist:
