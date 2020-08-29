@@ -4,7 +4,7 @@ Hello, my name is David Smith and this is my solution to the inventory allocatio
 
 ## Instructions for running tests
 
-This program was written with python 3, so if you are on a computer installed with python, then simply run the UnitTestingForChallenge.py with the inventory_allocation.py file in the same directory. 
+This program was written within python 3, so if you are on a computer with a python interpreter installed, then simply run the UnitTestingForChallenge.py with the inventory_allocation.py file in the same directory (using the python3 command if relevant). 
 
 <hr/>
 
