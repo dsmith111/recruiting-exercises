@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 class inventoryAllocation:
-ouses
 
     # Define shipment validation method
     def findShipment(orders,warehouses):
