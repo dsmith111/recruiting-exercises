@@ -116,7 +116,7 @@ class AllocationTesting(unittest.TestCase):
         shipment = InventoryAllocation.find_shipment(order, inventory_distribution)
         self.assertEqual(shipment, [])
     
-    # Test on surplus inventory
+    # Test 12: on surplus inventory
     def test_surplusInventory(self):
         order = {'apple': 1}
         inventory_distribution = [{'name': 'owd', 'inventory': {'apple': 10}}]
@@ -129,28 +129,28 @@ class AllocationErrorTesting(unittest.TestCase):
     
     # Type Errors
     
-    # Test 1: Amount of an order is not a number
+    # Test 13: Amount of an order is not a number
     def test_OrderAmountIsString_TypeError(self):
         order = {'apple': '1'}
         inventory_distribution = [{'name': 'owd', 'inventory': {'apple': 1}}]
         with self.assertRaises(TypeError):
             InventoryAllocation.find_shipment(order, inventory_distribution)
 
-    # Test 2: Amount of inventory in a warehouse is not a number
+    # Test 14: Amount of inventory in a warehouse is not a number
     def test_InventoryAmountIsString_TypeError(self):
         order = {'apple': 1}
         inventory_distribution = [{'name': 'owd', 'inventory': {'apple': '1'}}]
         with self.assertRaises(TypeError):
             InventoryAllocation.find_shipment(order, inventory_distribution)
 
-    # Test 3: Name of an order is not a string
+    # Test 15: Name of an order is not a string
     def test_OrderNameIsNonString_TypeError(self):
         order = {1: 1}
         inventory_distribution = [{'name': 'owd', 'inventory': {'apple': 1}}]
         with self.assertRaises(TypeError):
             InventoryAllocation.find_shipment(order, inventory_distribution)
     
-    # Test 4: Name of a company is not a string
+    # Test 16: Name of a company is not a string
     def test_NameInDistributionIsNonString_TypeError(self):
         order = {'apple': 1}
         inventory_distribution = [{'name': 1, 'inventory': {'apple': 1}}]
