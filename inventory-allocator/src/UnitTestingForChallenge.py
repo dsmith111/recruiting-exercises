@@ -41,7 +41,7 @@ class AllocationTesting(unittest.TestCase):
                                     ])
 
     # Test 4: One order, no valid shipments, one listed warehouse
-    def OneOrder_InvalidShipment__OneProviding_OneWarehouse(self):
+    def test_OneOrder_InvalidShipment__OneProviding_OneWarehouse(self):
         order = {'apple': 1}
         inventory_distribution = [{'name': 'owd', 'inventory': {'apple': 0}}]
         shipment = InventoryAllocation.find_shipment(order, inventory_distribution)
