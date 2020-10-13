@@ -1,72 +1,74 @@
-#!/usr/bin/env python
 
 class InventoryAllocation:
 
-    # Define shipment validation method
-    def find_shipment(orders,warehouses):
-        inventory_key = 'inventory'
-        name_key = 'name'
-        shipment = []
+    def __init__(self, order, inventory):
 
-        for order in orders:
-            if type(order) != str:
-                raise TypeError
-                
-            order_limit = orders[order]
-            all_listed_inventory = map(lambda warehouse: warehouse[inventory_key], warehouses)
-            product_dist = []
-            
-            for products in all_listed_inventory:
-                product_dist+=list(products)
-                
-            if order in product_dist:
+        self.order = order
+        self.inventory = inventory
+        self.amount_needed = order
+        self.shipment = []
+        self.name_key = "name"
+        self.inventory_key = "inventory"
 
-                # Filter out warehouses which do not store the order
-                # by checking for name and amount in stock 
-                valid_warehouses = filter(lambda warehouse: order
-                                         in str(warehouse), warehouses)
-                stocked_warehouses = filter(lambda warehouse:
-                                           warehouse[inventory_key][order] != 0,
-                                           valid_warehouses)
-                stocked_warehouses = list(stocked_warehouses)
+    def valid_inventory(self, local_inventory_names):
 
-                total_order = sum(map(lambda inventory:
-                                 inventory[inventory_key][order],
-                                 stocked_warehouses.copy()))
-                counted_stock = 0
-               
-                # If not enough inventory for current order, shipment is invalid
-                if total_order < order_limit or len(stocked_warehouses) == 0:
-                    return []
+        matching_order = map(lambda order: order in local_inventory_names,
+                             self.order.keys())
+        matching_order = any(matching_order)
+        return matching_order
 
-                # Add potential warehouses and amount of inventory they can
-                # provide to shipment list
-                for warehouse in stocked_warehouses:
-                    
-                    if warehouse[name_key] not in str(shipment):
-                        shipment.append({warehouse[name_key]: {}})
-                        index_location = -1
-                    
-                    else:
-                        
-                        for current_count in range(len(shipment)):
-                            
-                            if next(iter(shipment[current_count])) == warehouse[name_key]:
-                                index_location = current_count
 
-                    amount_in_stock = warehouse[inventory_key][order]
-                            
-                    # If is order fulfilled, stop iterating
-                    if amount_in_stock + counted_stock >= order_limit:
-                        amount_needed = order_limit - counted_stock
-                        shipment[index_location][warehouse[name_key]].update({order: amount_needed})
-                        break
-                    
-                    else:
-                        counted_stock += amount_in_stock
-                        shipment[index_location][warehouse[name_key]].update({order: amount_in_stock})
-            
+    def compare_amount(self, local_inventory, local_inventory_products, company_name):
+        first = True
+        for order in self.order.keys():
+
+            if order in local_inventory_products:
+                if first:
+                    self.shipment.append({company_name: {}})
+                    first = False
+
+                difference =  self.amount_needed[order] - local_inventory[order]
+
+                if local_inventory[order] == 0 or self.amount_needed[order] == 0:
+                    continue
+
+                if difference >= 0:
+                    amount_provided = local_inventory[order]
+                else:
+                    amount_provided = self.amount_needed[order]
+
+                self.shipment[-1][company_name].update({order: amount_provided})
+                self.amount_needed[order] -= amount_provided
+
+
+    def check_type(self):
+
+        logic_array = map(lambda order: type(order) != str, self.order.keys())
+        logic_array2 = map(lambda name: type(name[self.name_key]) != str, self.inventory)
+        if any(logic_array) or any(logic_array2):
+            raise TypeError
+
+    def shipment_validation(self):
+
+        # Raise error if wrong data type
+        self.check_type()
+
+        for warehouse in self.inventory:
+
+            if sum(self.amount_needed.values()) == 0:
+                break
+
+            local_inventory = warehouse[self.inventory_key]
+            local_inventory_products = local_inventory.keys()
+            company_name = warehouse[self.name_key]
+            matching = self.valid_inventory(local_inventory_products)
+
+            if matching:
+                self.compare_amount(local_inventory, local_inventory_products, company_name)
             else:
-                return []
-        
-        return shipment
+                continue
+
+        if sum(self.amount_needed.values()) == 0:
+            return self.shipment
+
+        return []
